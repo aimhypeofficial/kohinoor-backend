@@ -1,0 +1,27 @@
+{
+  "name": "fieldservice-api",
+  "version": "1.0.0",
+  "main": "src/app.js",
+  "scripts": {
+    "dev": "node --watch --env-file=.env src/server.js",
+    "start": "node src/server.js",
+    "check": "node -e \"require('./src/app');console.log('app loads OK')\""
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.45.0",
+    "@vercel/functions": "^3.11.3",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "express-rate-limit": "^7.4.0",
+    "firebase-admin": "^12.5.0",
+    "helmet": "^7.1.0",
+    "nodemailer": "^7.0.13",
+    "zod": "^3.23.8"
+  },
+  "description": "Kohinoor AC Field Service API (Express, Vercel serverless)",
+  "private": true,
+  "engines": {
+    "node": ">=20"
+  }
+}

@@ -1,0 +1,39 @@
+# Render Blueprint for the backend API (Render dashboard -> New -> Blueprint -> pick this repo).
+# The admin website stays on Vercel (or add it on Render as a Static Site, see DEPLOY.md).
+services:
+  - type: web
+    name: kohinoor-ac-api
+    runtime: node
+    plan: free
+    region: singapore            # closest Render region to India; pick the one near your Supabase region
+    # this repo is the backend itself, so no rootDir
+    buildCommand: npm ci --omit=dev
+    startCommand: npm start
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: NODE_ENV
+        value: production
+      - key: CRON_SECRET          # protects /api/cron/*; the server's daily jobs use it too
+        generateValue: true
+      - key: KEEP_ALIVE_MINUTES   # self-ping /api/health so the free plan does not sleep
+        value: "2"
+      # Set these in the dashboard (sync: false = Render asks for the value, it is never stored in git)
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      - key: CORS_ORIGIN          # admin website address, e.g. https://your-admin.vercel.app
+        sync: false
+      - key: SMTP_USER            # Gmail address (email option A)
+        sync: false
+      - key: SMTP_PASS            # Gmail App Password (16 letters)
+        sync: false
+      - key: FIREBASE_SERVICE_ACCOUNT   # push notifications: service-account JSON on one line
+        sync: false
+      - key: MAIL_FROM
+        sync: false
+      - key: LOGO_URL
+        sync: false
